@@ -1,6 +1,6 @@
 package geegees.model
 
-class Horse {
+public class Horse {
 
     String name
     String odds
@@ -11,6 +11,13 @@ class Horse {
     static belongsTo = [race: Race]
 
     static constraints = {
+    }
+
+    public Horse(){}
+
+    public Horse(String name, String odds) {
+        this.name = name
+        this.odds = odds
     }
 
     @Override

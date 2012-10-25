@@ -1,8 +1,11 @@
 package geegees.model
 
 import org.springframework.dao.DataIntegrityViolationException
+import geegees.service.RacingPostRaceService
 
 class RaceController {
+
+    RacingPostRaceService racingPostRaceService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -11,6 +14,9 @@ class RaceController {
     }
 
     def list(Integer max) {
+        racingPostRaceService.getRaces().each {Race race ->
+            race.save(flush:true)
+        }
         params.max = Math.min(max ?: 10, 100)
         [raceInstanceList: Race.list(params), raceInstanceTotal: Race.count()]
     }
