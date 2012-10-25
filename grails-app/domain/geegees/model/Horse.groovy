@@ -7,6 +7,7 @@ public class Horse {
     Integer tips = 0
     double magicNumber
     double decimalOdds
+    int finishingPosition
 
     static belongsTo = [race: Race]
 
