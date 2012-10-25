@@ -2,12 +2,14 @@ package geegees.model
 
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
+import org.joda.time.LocalDate
 
 public class Race implements Comparable<Race> {
 
     String venue
     String time
     Integer numberOfRunners
+    LocalDate date = new LocalDate()
 //    Collection<Horse> horses
     boolean bettable = false
 

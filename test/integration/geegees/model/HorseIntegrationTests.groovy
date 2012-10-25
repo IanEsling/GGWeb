@@ -4,6 +4,7 @@ import static org.junit.Assert.*
 import org.junit.*
 
 import static com.google.common.collect.Lists.newArrayList
+import org.joda.time.LocalDate
 
 class HorseIntegrationTests {
 
@@ -23,5 +24,6 @@ class HorseIntegrationTests {
         assertNotNull("can't find my other horse", Horse.findByName("myOtherName"))
         Race savedRace = Race.findByVenue("My Venue")
         assertEquals("wrong number of horses in race", 2, savedRace.horses.size())
+        assertEquals("wrong date for race", new LocalDate(), savedRace.getDate())
     }
 }
