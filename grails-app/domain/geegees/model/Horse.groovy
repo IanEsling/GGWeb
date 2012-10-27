@@ -1,6 +1,6 @@
 package geegees.model
 
-public class Horse {
+public class Horse implements Serializable{
 
     String name
     String odds
@@ -10,6 +10,10 @@ public class Horse {
     int finishingPosition
 
     static belongsTo = [race: Race]
+
+    static mapping = {
+        id composite: ['race', 'name']
+    }
 
     static constraints = {
     }
@@ -21,22 +25,23 @@ public class Horse {
         this.odds = odds
     }
 
-    @SuppressWarnings("RedundantIfStatement")
-    @Override
-    public boolean equals(Object o) {
-//        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    boolean equals(o) {
+        if (this.is(o)) return true
+        if (getClass() != o.class) return false
 
-        Horse horse = (Horse) o;
+        Horse horse = (Horse) o
 
-        if (name != null ? !name.equals(horse.name) : horse.name != null) return false;
+        if (name != horse.name) return false
+        if (race != horse.race) return false
 
-        return true;
+        return true
     }
 
-    @Override
-    public int hashCode() {
-        return name != null ? name.hashCode() : 0;
+    int hashCode() {
+        int result
+        result = name.hashCode()
+        result = 31 * result + (race != null ? race.hashCode() : 0)
+        return result
     }
 
     @Override

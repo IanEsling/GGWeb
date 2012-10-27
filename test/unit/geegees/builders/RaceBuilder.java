@@ -3,10 +3,8 @@ package geegees.builders;
 import geegees.model.Horse;
 import geegees.model.Race;
 
-import java.util.Collection;
 import java.util.Set;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Sets.newHashSet;
 
 public class RaceBuilder {
@@ -16,13 +14,13 @@ public class RaceBuilder {
     private Integer numberOfRunners;
     private Set<Horse> horses = newHashSet();
 
-    private RaceBuilder(){}
+    private RaceBuilder() {}
 
-    public static RaceBuilder raceBuilder(){
+    public static RaceBuilder raceBuilder() {
         return new RaceBuilder();
     }
 
-    public Race build(){
+    public Race build() {
         Race race = new Race();
         race.setTime(time);
         race.setVenue(venue);

@@ -3,6 +3,7 @@ package geegees.model
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.joda.time.LocalDate
+
 import org.jadira.usertype.dateandtime.joda.PersistentLocalDate
 
 public class Race implements Comparable<Race> {
@@ -11,7 +12,6 @@ public class Race implements Comparable<Race> {
     String time
     Integer numberOfRunners
     LocalDate raceDate = new LocalDate()
-//    Collection<Horse> horses
     boolean bettable = false
 
     static hasMany = [horses:Horse]
@@ -21,6 +21,7 @@ public class Race implements Comparable<Race> {
     }
 
     static constraints = {
+        time(unique: ['venue', 'raceDate'])
     }
 
     public Race(){}
