@@ -45,6 +45,11 @@
       <sourceFolder url="file://$USER_HOME$/.grails/2.1.1/projects/GGWeb/plugins/jquery-1.8.0/grails-app/services" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.1.1/projects/GGWeb/plugins/jquery-1.8.0/grails-app/taglib" isTestSource="false" />
     </content>
+    <content url="file://$USER_HOME$/.grails/2.1.1/projects/GGWeb/plugins/quartz-1.0-RC2">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.1.1/projects/GGWeb/plugins/quartz-1.0-RC2/src/java" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.1.1/projects/GGWeb/plugins/quartz-1.0-RC2/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.1.1/projects/GGWeb/plugins/quartz-1.0-RC2/grails-app/services" isTestSource="false" />
+    </content>
     <content url="file://$USER_HOME$/.grails/2.1.1/projects/GGWeb/plugins/resources-1.1.6">
       <sourceFolder url="file://$USER_HOME$/.grails/2.1.1/projects/GGWeb/plugins/resources-1.1.6/src/java" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.1.1/projects/GGWeb/plugins/resources-1.1.6/src/groovy" isTestSource="false" />
@@ -116,6 +121,8 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.tomcat/tomcat-catalina-ant/jars/tomcat-catalina-ant-7.0.30.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jadira.usertype/usertype.spi/jars/usertype.spi-1.9.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jadira.usertype/usertype.jodatime/jars/usertype.jodatime-1.9.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/postgresql/postgresql/jars/postgresql-8.4-702.jdbc3.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.quartz-scheduler/quartz/jars/quartz-1.8.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

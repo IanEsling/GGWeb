@@ -14,7 +14,6 @@ class RaceController {
     }
 
     def list(Integer max) {
-        racingPostRaceService.saveRaces()
         params.max = Math.min(max ?: 10, 100)
         [raceInstanceList: Race.list(params), raceInstanceTotal: Race.count()]
     }
