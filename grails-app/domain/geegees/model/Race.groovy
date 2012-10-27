@@ -11,17 +11,14 @@ public class Race implements Comparable<Race> {
     String venue
     String time
     Integer numberOfRunners
-    LocalDate raceDate = new LocalDate()
     boolean bettable = false
 
     static hasMany = [horses:Horse]
 
-    static mapping = {
-        raceDate type: PersistentLocalDate
-    }
+    static belongsTo = [raceDay:RaceDay]
 
     static constraints = {
-        time(unique: ['venue', 'raceDate'])
+        time(unique: ['venue', 'raceDay'])
     }
 
     public Race(){}

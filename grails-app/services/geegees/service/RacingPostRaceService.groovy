@@ -7,6 +7,8 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import static com.google.common.collect.Lists.newArrayList
+import geegees.model.RaceDay
+import org.joda.time.LocalDate
 
 public class RacingPostRaceService {
 
@@ -37,13 +39,15 @@ public class RacingPostRaceService {
     }
 
     public void saveRaces(){
+        RaceDay raceDay = new RaceDay(raceDate: new LocalDate())
         getRaces(new RaceHandler(){
             @Override
             void handleRace(Race race) {
                 logger.info("saving $race to database...")
-                race.save()
+                raceDay.addToRaces(race)
             }
         })
+        raceDay.save()
     }
 
     public Collection<Race> getRaces() {
