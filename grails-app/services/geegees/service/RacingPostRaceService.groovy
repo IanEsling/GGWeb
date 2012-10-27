@@ -2,7 +2,6 @@ package geegees.service
 
 import geegees.model.Horse
 import geegees.model.Race
-
 import org.jsoup.nodes.Document
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -15,7 +14,7 @@ public class RacingPostRaceService {
     RacingPostDocumentService racingPostDocumentService
     RaceBetAnalysisDecoratorService raceBetAnalysisDecoratorService
 
-    public Collection<Race> getRaces() {
+    private Collection<Race> getRaces(RaceHandler handler) {
         List<Race> races = newArrayList();
         Collection<String> raceUrls = racingPostDocumentService.getRaceUrls();
         int i = 1;
@@ -30,10 +29,36 @@ public class RacingPostRaceService {
                 race.addToHorses(horse)
             }
             raceBetAnalysisDecoratorService.decorateRace(race)
-            races.add(race);
+//            races.add(race);
+            handler.handleRace(race)
         }
         Collections.sort(races);
         return races;
     }
 
+    public void saveRaces(){
+        getRaces(new RaceHandler(){
+            @Override
+            void handleRace(Race race) {
+                logger.info("saving $race to database...")
+                race.save()
+            }
+        })
+    }
+
+    public Collection<Race> getRaces() {
+        final Collection<Race> races = newArrayList()
+        getRaces(new RaceHandler() {
+            @Override
+            void handleRace(Race race) {
+                races.add(race)
+            }
+        })
+
+        return races;
+    }
+
+    public interface RaceHandler {
+        void handleRace (Race race);
+    }
 }

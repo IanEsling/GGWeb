@@ -99,6 +99,8 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.eclipse.jdt.core.compiler/ecj/jars/ecj-3.7.2.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.tomcat.embed/tomcat-embed-logging-juli/jars/tomcat-embed-logging-juli-7.0.30.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.apache.tomcat/tomcat-catalina-ant/jars/tomcat-catalina-ant-7.0.30.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jadira.usertype/usertype.spi/jars/usertype.spi-1.9.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jadira.usertype/usertype.jodatime/jars/usertype.jodatime-1.9.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -107,6 +109,7 @@
     </orderEntry>
     <orderEntry type="module" module-name="GGWeb-grailsPlugins" />
     <orderEntry type="library" name="org.mockito:mockito-all:1.9.5" level="project" />
+    <orderEntry type="library" name="postgresql-9.2-1000.jdbc4" level="project" />
   </component>
 </module>
 
