@@ -39,7 +39,7 @@ public class Horse implements Serializable{
 
     int hashCode() {
         int result
-        result = name.hashCode()
+        result = 31 * result + (name != null ? name.hashCode() : 0)
         result = 31 * result + (race != null ? race.hashCode() : 0)
         return result
     }

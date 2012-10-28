@@ -2,13 +2,13 @@ package geegees.service
 
 import geegees.model.Horse
 import geegees.model.Race
+import geegees.model.RaceDay
+import org.joda.time.LocalDate
 import org.jsoup.nodes.Document
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import static com.google.common.collect.Lists.newArrayList
-import geegees.model.RaceDay
-import org.joda.time.LocalDate
 
 public class RacingPostRaceService {
 
@@ -40,11 +40,14 @@ public class RacingPostRaceService {
 
     public void saveRaces(){
         RaceDay raceDay = new RaceDay(raceDate: new LocalDate())
+
         getRaces(new RaceHandler(){
             @Override
             void handleRace(Race race) {
                 logger.info("saving $race to database...")
+                if (!raceDay.races?.contains(race) && !race.horses?.isEmpty()) {
                 raceDay.addToRaces(race)
+                }
             }
         })
         raceDay.save()
@@ -63,6 +66,6 @@ public class RacingPostRaceService {
     }
 
     public interface RaceHandler {
-        void handleRace (Race race);
+        void handleRace(Race race);
     }
 }
