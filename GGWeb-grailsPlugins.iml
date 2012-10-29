@@ -62,12 +62,13 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="postgresql-9.2-1000.jdbc4" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="grails-2.1.1" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="org.mockito:mockito-all:1.9.5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="grails-2.1.1" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="postgresql-9.2-1000.jdbc4" level="project" />
     <orderEntry type="module-library" exported="">
       <library name="Grails User Library (GGWeb-grailsPlugins)">
         <CLASSES>
+          <root url="file://$USER_HOME$/.grails/2.1.1/projects/GGWeb/plugins/joda-time-1.4/lib" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/opensymphony/sitemesh/jars/sitemesh-2.4.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.hibernate.javax.persistence/hibernate-jpa-2.0-api/jars/hibernate-jpa-2.0-api-1.0.1.Final.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.codehaus.groovy/groovy-all/jars/groovy-all-1.8.8.jar!/" />
@@ -122,7 +123,6 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.jadira.usertype/usertype.jodatime/jars/usertype.jodatime-1.9.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.quartz-scheduler/quartz/jars/quartz-1.8.4.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/postgresql/postgresql/jars/postgresql-8.4-702.jdbc3.jar!/" />
-          <root url="file://$USER_HOME$/.grails/2.1.1/projects/GGWeb/plugins/joda-time-1.4/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
