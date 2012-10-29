@@ -4,3 +4,4 @@ out/*
 .project
 .setting/*
 .idea/*
+*.log

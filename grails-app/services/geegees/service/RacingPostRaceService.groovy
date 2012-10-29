@@ -38,15 +38,15 @@ public class RacingPostRaceService {
         return races;
     }
 
-    public void saveRaces(){
+    public void saveRaces() {
         RaceDay raceDay = new RaceDay(raceDate: new LocalDate())
 
-        getRaces(new RaceHandler(){
+        getRaces(new RaceHandler() {
             @Override
             void handleRace(Race race) {
                 logger.info("saving $race to database...")
                 if (!raceDay.races?.contains(race) && !race.horses?.isEmpty()) {
-                raceDay.addToRaces(race)
+                    raceDay.addToRaces(race)
                 }
             }
         })

@@ -76,12 +76,8 @@ log4j = {
     appenders {
         console name: 'stdout', layout: pattern(conversionPattern: '%c{2} %m%n'),
                 threshold: org.apache.log4j.Level.INFO
-        environments {
-            production {
-                rollingFile name: "fileAppender", maxFileSize: 10240,
+        rollingFile name: "fileAppender", maxFileSize: 10240,
                         file: "geegees.log"
-            }
-        }
     }
 
     debug fileAppender: 'geegees',
