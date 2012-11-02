@@ -31,7 +31,6 @@ public class RacingPostRaceService {
                 race.addToHorses(horse)
             }
             raceBetAnalysisDecoratorService.decorateRace(race)
-//            races.add(race);
             handler.handleRace(race)
         }
         Collections.sort(races);
@@ -45,12 +44,23 @@ public class RacingPostRaceService {
             @Override
             void handleRace(Race race) {
                 logger.info("saving $race to database...")
-                if (!raceDay.races?.contains(race) && !race.horses?.isEmpty()) {
+                if (!raceDay.races?.contains(race)) {
                     raceDay.addToRaces(race)
+                }
+
+                if (race.horses != null && race.horses.size() > 0 &&
+                        raceDay.races.find {
+                            it.venue == race.venue &&
+                                    it.time == race.time
+                        }.horses == null) {
+//                    raceDay.races.find {
+//                        it == race
+//                    }.addToHorses(race.horses)
+                    println(race)
                 }
             }
         })
-        raceDay.save()
+        raceDay.save(flush: true)
     }
 
     public Collection<Race> getRaces() {

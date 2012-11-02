@@ -3,8 +3,13 @@ package geegees.service
 import com.google.common.base.Function
 import geegees.model.Horse
 import geegees.model.Race
-import groovy.mock.interceptor.MockFor
+import geegees.model.RaceDay
+import grails.test.mixin.Mock
+import grails.test.mixin.TestFor
+import groovy.mock.interceptor.StubFor
+import org.joda.time.LocalDate
 import org.jsoup.nodes.Document
+import org.junit.Before
 import org.junit.Test
 
 import static com.google.common.collect.Lists.newArrayList
@@ -13,27 +18,23 @@ import static geegees.builders.BettingForecastBuilder.bettingForecastBuilder
 import static geegees.builders.HorseBuilder.horseBuilder
 import static geegees.builders.RaceBuilder.raceBuilder
 import static geegees.builders.TipsDecoratorBuilder.tipsDecoratorBuilder
-import static org.junit.Assert.assertEquals
-import grails.test.mixin.TestFor
-import grails.test.mixin.Mock
-import groovy.mock.interceptor.StubFor
 
 /**
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
  */
 @TestFor(RacingPostRaceService)
-@Mock([Race, RaceBetAnalysisDecoratorService])
+@Mock([RaceDay, Race, RaceBetAnalysisDecoratorService])
 class RacingPostRaceServiceTests {
 
-    @Test
-    public void getRaces() {
-        def racingPostDocumentService = new StubFor(RacingPostDocumentService)
-        Document doc1 = new Document("url1");
-        Document doc2 = new Document("url2");
-        List<Horse> horses1 = newArrayList(horseBuilder().name("1").odds("1/1").build(), horseBuilder().name("4").odds("4/4").build(), horseBuilder().name("5").odds("5/5").build());
-        List<Horse> horses2 = newArrayList(horseBuilder().name("2").odds("2/2").build(), horseBuilder().name("3").odds("3/3").build());
-        Collection<Horse> tips1 = addTips(horses1);
-        Collection<Horse> tips2 = addTips(horses2);
+    def racingPostDocumentService
+    Document doc1
+    Document doc2
+
+    @Before
+    public void setUpDocService() {
+        racingPostDocumentService = new StubFor(RacingPostDocumentService)
+        doc1 = new Document("url1")
+        doc2 = new Document("url2")
         racingPostDocumentService.demand.getRaceUrls(10) {
             newArrayList("url1", "url2")
         }
@@ -49,6 +50,70 @@ class RacingPostRaceServiceTests {
             if (doc == doc2)
                 return raceBuilder().venue("Venue 2").time("time 2").numberOfRunners(2).build()
         }
+    }
+
+    @Test
+    public void updateRacesWithHorses() {
+        racingPostDocumentService.demand.getBettingForecast(10) {doc ->
+            bettingForecastBuilder().build()
+        }
+
+        racingPostDocumentService.demand.getTipsDecorator(10) {doc, horses ->
+            tipsDecoratorBuilder().build()
+        }
+        service.racingPostDocumentService = racingPostDocumentService.proxyInstance()
+        service.saveRaces()
+        RaceDay raceDay = RaceDay.findByRaceDate(new LocalDate())
+        assertEquals("no races", 2, raceDay.races?.size());
+        Race race1 = getRaceByVenue(raceDay.races, "Venue 1");
+        Race race2 = getRaceByVenue(raceDay.races, "Venue 2");
+        assertEquals("wrong time for race1", "time 1", race1.getTime());
+        assertEquals("wrong number of runners for race 1", 3, race1.getNumberOfRunners().intValue());
+        assertEquals("wrong number of horses for race 1", 0, race1.getHorses().size());
+
+        assertEquals("wrong time for race2", "time 2", race2.getTime());
+        assertEquals("wrong number of runners for race 2", 2, race2.getNumberOfRunners().intValue());
+        assertEquals("wrong number of horses for race 2", 0, race2.getHorses().size());
+
+        List<Horse> horses1 = newArrayList(horseBuilder().name("1").odds("1/1").build(), horseBuilder().name("4").odds("4/4").build(), horseBuilder().name("5").odds("5/5").build());
+        List<Horse> horses2 = newArrayList(horseBuilder().name("2").odds("2/2").build(), horseBuilder().name("3").odds("3/3").build());
+        Collection<Horse> tips1 = addTips(horses1);
+        Collection<Horse> tips2 = addTips(horses2);
+
+        racingPostDocumentService.demand.getBettingForecast(10) {doc ->
+            if (doc == doc1)
+                return bettingForecastBuilder().horses(horses1).build()
+            if (doc == doc2)
+                return bettingForecastBuilder().horses(horses2).build()
+        }
+
+        racingPostDocumentService.demand.getTipsDecorator(10) {doc, horses ->
+            if (doc == doc1 && horses == horses1)
+                return tipsDecoratorBuilder().horses(tips1).build()
+            if (doc == doc2 && horses == horses2)
+                return tipsDecoratorBuilder().horses(tips2).build()
+        }
+        service.saveRaces()
+        raceDay = RaceDay.findByRaceDate(new LocalDate())
+        assertEquals("no races", 2, raceDay.races?.size());
+        race1 = getRaceByVenue(raceDay.races, "Venue 1");
+        race2 = getRaceByVenue(raceDay.races, "Venue 2");
+        assertEquals("wrong time for race1", "time 1", race1.getTime());
+        assertEquals("wrong number of runners for race 1", 3, race1.getNumberOfRunners().intValue());
+        assertEquals("wrong number of horses for race 1", 3, race1.getHorses().size());
+
+        assertEquals("wrong time for race2", "time 2", race2.getTime());
+        assertEquals("wrong number of runners for race 2", 2, race2.getNumberOfRunners().intValue());
+        assertEquals("wrong number of horses for race 2", 2, race2.getHorses().size());
+
+    }
+
+    @Test
+    public void getBrandNewRaces() {
+        List<Horse> horses1 = newArrayList(horseBuilder().name("1").odds("1/1").build(), horseBuilder().name("4").odds("4/4").build(), horseBuilder().name("5").odds("5/5").build());
+        List<Horse> horses2 = newArrayList(horseBuilder().name("2").odds("2/2").build(), horseBuilder().name("3").odds("3/3").build());
+        Collection<Horse> tips1 = addTips(horses1);
+        Collection<Horse> tips2 = addTips(horses2);
 
         racingPostDocumentService.demand.getBettingForecast(10) {doc ->
             if (doc == doc1)
@@ -65,9 +130,11 @@ class RacingPostRaceServiceTests {
         }
 
         service.racingPostDocumentService = racingPostDocumentService.proxyInstance()
-        assertEquals("no races", 2, service.getRaces().size());
-        Race race1 = getRaceByVenue(service.getRaces(), "Venue 1");
-        Race race2 = getRaceByVenue(service.getRaces(), "Venue 2");
+        service.saveRaces()
+        RaceDay raceDay = RaceDay.findByRaceDate(new LocalDate())
+        assertEquals("no races", 2, raceDay.races.size());
+        Race race1 = getRaceByVenue(raceDay.races, "Venue 1");
+        Race race2 = getRaceByVenue(raceDay.races, "Venue 2");
         assertEquals("wrong time for race1", "time 1", race1.getTime());
         assertEquals("wrong number of runners for race 1", 3, race1.getNumberOfRunners().intValue());
         assertEquals("wrong number of horses for race 1", 3, race1.getHorses().size());
