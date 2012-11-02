@@ -72,10 +72,8 @@ environments {
 // log4j configuration
 log4j = {
     appenders {
-        console name: 'stdout', layout: pattern(conversionPattern: '%c{2} %m%n'),
-                threshold: org.apache.log4j.Level.INFO
-        rollingFile name: "fileAppender", maxFileSize: 10240,
-                file: "geegees.log"
+        console name: 'stdout', layout: pattern(conversionPattern: '%c{2} %m%n'), threshold: org.apache.log4j.Level.INFO
+        rollingFile name: "fileAppender", maxFileSize: 10240, file: "geegees.log"
     }
 
     root {

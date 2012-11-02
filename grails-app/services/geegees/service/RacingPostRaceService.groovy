@@ -7,7 +7,6 @@ import org.joda.time.LocalDate
 import org.jsoup.nodes.Document
 
 import static com.google.common.collect.Lists.newArrayList
-import org.apache.commons.logging.LogFactory
 
 public class RacingPostRaceService {
 

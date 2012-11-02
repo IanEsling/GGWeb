@@ -10,7 +10,8 @@ import geegees.builders.RaceBuilder
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
  */
-//@TestFor(RaceDay)
+@TestFor(RaceDay)
+@Mock(Race)
 class RaceDayTests {
 
     @Test
@@ -22,6 +23,6 @@ class RaceDayTests {
         race.addToHorses(new Horse(name: "horse3", odds: "12/1"))
         raceDay.addToRaces(race)
         raceDay.save()
-        assertEquals("wrong number of racedays", 1, RaceDay.findAll())
+        assertEquals("wrong number of racedays", 1, RaceDay.findAll().size())
     }
 }

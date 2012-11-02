@@ -1,24 +1,14 @@
 package geegees.service
 
-
-
-import grails.test.mixin.*
-import org.junit.*
 import geegees.model.Horse
+import geegees.model.Race
+import grails.test.mixin.TestFor
+import org.jsoup.Jsoup
+import org.junit.Before
+import org.junit.Test
 
 import static com.google.common.collect.Lists.newArrayList
 import static geegees.builders.HorseBuilder.horseBuilder
-import static geegees.builders.HorseBuilder.horseBuilder
-import static geegees.builders.HorseBuilder.horseBuilder
-import static geegees.builders.HorseBuilder.horseBuilder
-import static geegees.builders.HorseBuilder.horseBuilder
-import static geegees.builders.HorseBuilder.horseBuilder
-import static geegees.builders.HorseBuilder.horseBuilder
-import static geegees.builders.HorseBuilder.horseBuilder
-import static geegees.builders.HorseBuilder.horseBuilder
-import static geegees.builders.HorseBuilder.horseBuilder
-import geegees.model.Race
-import org.jsoup.Jsoup
 
 /**
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
@@ -72,8 +62,12 @@ class RacingPostDocumentServiceTests {
         assertNotNull("no forecast", forecast);
         assertEquals("wrong number of horses", 10, forecast.getHorses().size());
         for (Horse horse : forecast.getHorses()) {
-            assertTrue("can't find horse " + horse.getName(), horses.contains(horse));
-            assertEquals("wrong odds for horse " + horse.getName(), getHorseByName(horse).getOdds(),
+            assertNotNull("can't find horse " + horse.getName(), horses.find {
+                it.name == horse.name
+            });
+            assertEquals("wrong odds for horse " + horse.getName(), horses.find {
+                it.name == horse.name
+            }.getOdds(),
                     horse.getOdds());
         }
     }
