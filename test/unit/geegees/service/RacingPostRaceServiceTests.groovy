@@ -54,12 +54,30 @@ class RacingPostRaceServiceTests {
 
     @Test
     public void updateRacesWithHorses() {
-        racingPostDocumentService.demand.getBettingForecast(10) {doc ->
+        List<Horse> horses1 = newArrayList(horseBuilder().name("1").odds("1/1").build(), horseBuilder().name("4").odds("4/4").build(), horseBuilder().name("5").odds("5/5").build());
+        List<Horse> horses2 = newArrayList(horseBuilder().name("2").odds("2/2").build(), horseBuilder().name("3").odds("3/3").build());
+        Collection<Horse> tips1 = addTips(horses1);
+        Collection<Horse> tips2 = addTips(horses2);
+
+        racingPostDocumentService.demand.getBettingForecast(2) {doc ->
             bettingForecastBuilder().build()
         }
 
-        racingPostDocumentService.demand.getTipsDecorator(10) {doc, horses ->
+        racingPostDocumentService.demand.getTipsDecorator(2) {doc, horses ->
             tipsDecoratorBuilder().build()
+        }
+        racingPostDocumentService.demand.getBettingForecast(10) {doc ->
+            if (doc == doc1)
+                return bettingForecastBuilder().horses(horses1).build()
+            if (doc == doc2)
+                return bettingForecastBuilder().horses(horses2).build()
+        }
+
+        racingPostDocumentService.demand.getTipsDecorator(10) {doc, horses ->
+            if (doc == doc1 && horses == horses1)
+                return tipsDecoratorBuilder().horses(tips1).build()
+            if (doc == doc2 && horses == horses2)
+                return tipsDecoratorBuilder().horses(tips2).build()
         }
         service.racingPostDocumentService = racingPostDocumentService.proxyInstance()
         service.saveRaces()
@@ -75,25 +93,8 @@ class RacingPostRaceServiceTests {
         assertEquals("wrong number of runners for race 2", 2, race2.getNumberOfRunners().intValue());
         assertEquals("wrong number of horses for race 2", 0, race2.getHorses().size());
 
-        List<Horse> horses1 = newArrayList(horseBuilder().name("1").odds("1/1").build(), horseBuilder().name("4").odds("4/4").build(), horseBuilder().name("5").odds("5/5").build());
-        List<Horse> horses2 = newArrayList(horseBuilder().name("2").odds("2/2").build(), horseBuilder().name("3").odds("3/3").build());
-        Collection<Horse> tips1 = addTips(horses1);
-        Collection<Horse> tips2 = addTips(horses2);
-
-        racingPostDocumentService.demand.getBettingForecast(10) {doc ->
-            if (doc == doc1)
-                return bettingForecastBuilder().horses(horses1).build()
-            if (doc == doc2)
-                return bettingForecastBuilder().horses(horses2).build()
-        }
-
-        racingPostDocumentService.demand.getTipsDecorator(10) {doc, horses ->
-            if (doc == doc1 && horses == horses1)
-                return tipsDecoratorBuilder().horses(tips1).build()
-            if (doc == doc2 && horses == horses2)
-                return tipsDecoratorBuilder().horses(tips2).build()
-        }
         service.saveRaces()
+        assertEquals("wrong number of race days", 1, RaceDay.list().size())
         raceDay = RaceDay.findByRaceDate(new LocalDate())
         assertEquals("no races", 2, raceDay.races?.size());
         race1 = getRaceByVenue(raceDay.races, "Venue 1");

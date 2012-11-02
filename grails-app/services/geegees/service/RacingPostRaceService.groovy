@@ -38,25 +38,34 @@ public class RacingPostRaceService {
     }
 
     public void saveRaces() {
-        RaceDay raceDay = new RaceDay(raceDate: new LocalDate())
+        RaceDay raceDay = RaceDay.findByRaceDate(new LocalDate())
+        if (raceDay == null) {
+            logger.info("it's a new race day!")
+            raceDay = new RaceDay(raceDate: new LocalDate())
+        } else {
+            logger.info("using existing race day.")
+        }
 
         getRaces(new RaceHandler() {
             @Override
             void handleRace(Race race) {
-                logger.info("saving $race to database...")
-                if (!raceDay.races?.contains(race)) {
+                if (!raceDay.races?.find {
+                    it.venue == race.venue &&
+                            it.time == race.time
+                }) {
+                    logger.info("adding $race to race day...")
                     raceDay.addToRaces(race)
-                }
-
-                if (race.horses != null && race.horses.size() > 0 &&
-                        raceDay.races.find {
-                            it.venue == race.venue &&
-                                    it.time == race.time
-                        }.horses == null) {
-//                    raceDay.races.find {
-//                        it == race
-//                    }.addToHorses(race.horses)
-                    println(race)
+                } else {
+                    Race raceDayRace = raceDay.races.find {
+                        it.venue == race.venue &&
+                                it.time == race.time
+                    }
+                    if (raceDayRace.horses?.isEmpty() && !race.horses?.isEmpty()) {
+                        logger.info("adding horses from $race to existing race.")
+                        raceDayRace.horses = race.horses
+                    } else {
+                        logger.info("no horses found in this race either.")
+                    }
                 }
             }
         })
