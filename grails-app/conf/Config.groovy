@@ -68,7 +68,7 @@ environments {
 
         mail {
             host = "smtp.sendgrid.net"
-            port 465
+            port = 465
             username = System.env.SENDGRID_USERNAME
             password = System.env.SENDGRID_PASSWORD
             // TODO: grails.serverURL = "http://www.changeme.com"
