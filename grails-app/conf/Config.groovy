@@ -71,6 +71,10 @@ environments {
             port = 465
             username = System.env.SENDGRID_USERNAME
             password = System.env.SENDGRID_PASSWORD
+            props = ["mail.smtp.auth":"true",
+                    "mail.smtp.socketFactory.port":"465",
+                    "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+                    "mail.smtp.socketFactory.fallback":"false"]
             // TODO: grails.serverURL = "http://www.changeme.com"
         }
     }
