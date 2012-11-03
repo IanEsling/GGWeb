@@ -65,7 +65,13 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-        // TODO: grails.serverURL = "http://www.changeme.com"
+
+        mail {
+            host = "smtp.sendgrid.net"
+            username = System.env.SENDGRID_USERNAME
+            password = System.env.SENDGRID_PASSWORD
+            // TODO: grails.serverURL = "http://www.changeme.com"
+        }
     }
 }
 

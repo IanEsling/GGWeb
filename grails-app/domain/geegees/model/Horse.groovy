@@ -1,6 +1,6 @@
 package geegees.model
 
-public class Horse implements Serializable{
+public class Horse {
 
     String name
     String odds
@@ -17,7 +17,7 @@ public class Horse implements Serializable{
     static constraints = {
     }
 
-    public Horse(){}
+    public Horse() {}
 
     public Horse(String name, String odds) {
         this.name = name
