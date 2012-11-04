@@ -89,6 +89,7 @@
     <g:form>
         <fieldset class="buttons">
             <g:hiddenField name="id" value="${raceDayInstance?.id}"/>
+            <g:link class="list" action="email" id="${raceDayInstance?.id}">Email</g:link>
             <g:link class="edit" action="edit" id="${raceDayInstance?.id}"><g:message code="default.button.edit.label"
                                                                                       default="Edit"/></g:link>
             <g:actionSubmit class="delete" action="delete"

@@ -1,6 +1,7 @@
 package geegees.model
 
 import org.springframework.dao.DataIntegrityViolationException
+import org.joda.time.LocalDate
 
 class RaceDayController {
 
@@ -29,6 +30,12 @@ class RaceDayController {
         flash.message = message(code: 'default.created.message', args: [message(code: 'raceDay.label', default: 'RaceDay'), raceDayInstance.id])
         redirect(action: "show", id: raceDayInstance.id)
     }
+
+    def email(Long id){
+        RaceDay raceDay = RaceDay.get(id)
+        render(view: "/email/raceDay", model: [raceDay: raceDay])
+    }
+
 
     def show(Long id) {
         def raceDayInstance = RaceDay.get(id)

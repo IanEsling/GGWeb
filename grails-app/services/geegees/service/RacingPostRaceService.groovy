@@ -70,14 +70,14 @@ public class RacingPostRaceService {
             }
         })
         raceDay.save(flush: true)
-        if (sendMail) {
-            mailService.sendMail {
-                to "ian.esling@gmail.com"
-                from "GeeGees@GeeGees.com"
-                subject "Email From GeeGees!"
-                body "Email From GeeGees!"
-            }
-        }
+//        if (sendMail) {
+//            mailService.sendMail {
+//                to "ian.esling@gmail.com"
+//                from "GeeGees@GeeGees.com"
+//                subject "Email From GeeGees!"
+//                body "Email From GeeGees!"
+//            }
+//        }
     }
 
     public Collection<Race> getRaces() {
