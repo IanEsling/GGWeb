@@ -18,6 +18,7 @@ import static geegees.builders.BettingForecastBuilder.bettingForecastBuilder
 import static geegees.builders.HorseBuilder.horseBuilder
 import static geegees.builders.RaceBuilder.raceBuilder
 import static geegees.builders.TipsDecoratorBuilder.tipsDecoratorBuilder
+import grails.plugin.mail.MailService
 
 /**
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
@@ -26,12 +27,15 @@ import static geegees.builders.TipsDecoratorBuilder.tipsDecoratorBuilder
 @Mock([RaceDay, Race, RaceBetAnalysisDecoratorService])
 class RacingPostRaceServiceTests {
 
+    def mailService
     def racingPostDocumentService
     Document doc1
     Document doc2
 
     @Before
     public void setUpDocService() {
+        mailService = new StubFor(MailService)
+
         racingPostDocumentService = new StubFor(RacingPostDocumentService)
         doc1 = new Document("url1")
         doc2 = new Document("url2")
@@ -54,6 +58,9 @@ class RacingPostRaceServiceTests {
 
     @Test
     public void updateRacesWithHorses() {
+        mailService.demand.sendMail(2){}
+        service.mailService = mailService.proxyInstance()
+
         List<Horse> horses1 = newArrayList(horseBuilder().name("1").odds("1/1").build(), horseBuilder().name("4").odds("4/4").build(), horseBuilder().name("5").odds("5/5").build());
         List<Horse> horses2 = newArrayList(horseBuilder().name("2").odds("2/2").build(), horseBuilder().name("3").odds("3/3").build());
         Collection<Horse> tips1 = addTips(horses1);
@@ -80,6 +87,7 @@ class RacingPostRaceServiceTests {
                 return tipsDecoratorBuilder().horses(tips2).build()
         }
         service.racingPostDocumentService = racingPostDocumentService.proxyInstance()
+
         service.saveRaces()
         RaceDay raceDay = RaceDay.findByRaceDate(new LocalDate())
         assertEquals("no races", 2, raceDay.races?.size());
@@ -111,6 +119,9 @@ class RacingPostRaceServiceTests {
 
     @Test
     public void getBrandNewRaces() {
+        mailService.demand.sendMail(1){}
+        service.mailService = mailService.proxyInstance()
+
         List<Horse> horses1 = newArrayList(horseBuilder().name("1").odds("1/1").build(), horseBuilder().name("4").odds("4/4").build(), horseBuilder().name("5").odds("5/5").build());
         List<Horse> horses2 = newArrayList(horseBuilder().name("2").odds("2/2").build(), horseBuilder().name("3").odds("3/3").build());
         Collection<Horse> tips1 = addTips(horses1);

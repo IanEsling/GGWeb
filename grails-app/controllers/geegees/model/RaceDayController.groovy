@@ -11,11 +11,6 @@ class RaceDayController {
     }
 
     def list(Integer max) {
-        sendMail {
-            to "ian.esling@gmail.com"
-            subject "Email From GeeGees!"
-            body "Email From GeeGees!"
-        }
         params.max = Math.min(max ?: 10, 100)
         [raceDayInstanceList: RaceDay.list(params), raceDayInstanceTotal: RaceDay.count()]
     }

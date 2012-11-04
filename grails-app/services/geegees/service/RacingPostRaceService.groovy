@@ -7,9 +7,11 @@ import org.joda.time.LocalDate
 import org.jsoup.nodes.Document
 
 import static com.google.common.collect.Lists.newArrayList
+import grails.plugin.mail.MailService
 
 public class RacingPostRaceService {
 
+    MailService mailService
     RacingPostDocumentService racingPostDocumentService
     RaceBetAnalysisDecoratorService raceBetAnalysisDecoratorService
 
@@ -35,6 +37,7 @@ public class RacingPostRaceService {
     }
 
     public void saveRaces() {
+        boolean sendMail = false
         RaceDay raceDay = RaceDay.findByRaceDate(new LocalDate())
         if (raceDay == null) {
             log.info("it's a new race day!")
@@ -52,6 +55,7 @@ public class RacingPostRaceService {
                 }) {
                     log.info("adding $race to race day...")
                     raceDay.addToRaces(race)
+                    sendMail = true
                 } else {
                     Race raceDayRace = raceDay.races.find {
                         it.venue == race.venue &&
@@ -60,13 +64,20 @@ public class RacingPostRaceService {
                     if (raceDayRace.horses?.isEmpty() && !race.horses?.isEmpty()) {
                         log.info("adding horses from $race to existing race.")
                         raceDayRace.horses = race.horses
-                    } else {
-                        log.info("no horses found in this race either.")
+                        sendMail = true
                     }
                 }
             }
         })
         raceDay.save(flush: true)
+        if (sendMail) {
+            mailService.sendMail {
+                to "ian.esling@gmail.com"
+                from "GeeGees@GeeGees.com"
+                subject "Email From GeeGees!"
+                body "Email From GeeGees!"
+            }
+        }
     }
 
     public Collection<Race> getRaces() {
