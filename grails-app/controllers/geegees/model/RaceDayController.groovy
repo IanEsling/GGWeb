@@ -2,6 +2,7 @@ package geegees.model
 
 import org.springframework.dao.DataIntegrityViolationException
 import org.joda.time.LocalDate
+import geegees.web.EmailPresentableRaceDay
 
 class RaceDayController {
 
@@ -33,7 +34,7 @@ class RaceDayController {
 
     def email(Long id){
         RaceDay raceDay = RaceDay.get(id)
-        render(view: "/email/raceDay", model: [raceDay: raceDay])
+        render(view: "/email/raceDay", model: [raceDay: new EmailPresentableRaceDay(raceDay)])
     }
 
 

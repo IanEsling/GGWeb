@@ -17,7 +17,7 @@ public class EmailPresentableRaceDayTest {
     @Test
     public void shouldOnlyShowBettableRaces() {
         RaceDay raceDay = raceDayBuilder()
-                .race(raceBuilder().bettable(true).qbuild())
+                .race(raceBuilder().bettable(true).build())
                 .race(raceBuilder().bettable(false).build())
                 .raceDate(new LocalDate())
                 .build();
