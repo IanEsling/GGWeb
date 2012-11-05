@@ -13,6 +13,7 @@ public class RaceBuilder {
     private String venue;
     private Integer numberOfRunners;
     private Set<Horse> horses = newHashSet();
+    private boolean bettable;
 
     private RaceBuilder() {}
 
@@ -26,6 +27,7 @@ public class RaceBuilder {
         race.setVenue(venue);
         race.setNumberOfRunners(numberOfRunners);
         race.setHorses(horses);
+        race.setBettable(bettable);
         return race;
     }
 
@@ -51,6 +53,11 @@ public class RaceBuilder {
 
     public RaceBuilder horse(Horse horse) {
         this.horses.add(horse);
+        return this;
+    }
+
+    public RaceBuilder bettable(boolean bettable) {
+        this.bettable = bettable;
         return this;
     }
 }
