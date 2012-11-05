@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document
 
 import static com.google.common.collect.Lists.newArrayList
 import grails.plugin.mail.MailService
+import geegees.web.EmailPresentableRaceDay
 
 public class RacingPostRaceService {
 
@@ -70,14 +71,14 @@ public class RacingPostRaceService {
             }
         })
         raceDay.save(flush: true)
-//        if (sendMail) {
-//            mailService.sendMail {
-//                to "ian.esling@gmail.com"
-//                from "GeeGees@GeeGees.com"
-//                subject "Email From GeeGees!"
-//                body "Email From GeeGees!"
-//            }
-//        }
+        if (sendMail) {
+            mailService.sendMail {
+                to "ian.esling@gmail.com"
+                from "GeeGees@GeeGees.com"
+                subject "Email From GeeGees!"
+                html g.render(template: "/email/raceDay", model:[raceDay: new EmailPresentableRaceDay(raceDay)])
+            }
+        }
     }
 
     public Collection<Race> getRaces() {
