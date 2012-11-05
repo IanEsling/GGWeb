@@ -76,7 +76,7 @@ public class RacingPostRaceService {
                 to "ian.esling@gmail.com"
                 from "GeeGees@GeeGees.com"
                 subject "Email From GeeGees!"
-                body (template: "/email/raceDay", model:[raceDay: new EmailPresentableRaceDay(raceDay)])
+                body (view: "/email/raceDay", model:[raceDay: new EmailPresentableRaceDay(raceDay)])
             }
         }
     }
