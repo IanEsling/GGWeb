@@ -1,5 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-<h1>Les's Layer of Profit for ${raceDay.raceDate}: </h1>
+<%@ page contentType="text/html" %>
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+
+<body>
+<h1>Les's Layer of Profit for ${raceDay.raceDate}:</h1>
 
 <g:if test="${raceDay?.bettableRaces}">
     <g:each in="${raceDay.bettableRaces}" var="race">
@@ -38,3 +44,4 @@
         </table>
     </g:each>
 </g:if>
+</body>

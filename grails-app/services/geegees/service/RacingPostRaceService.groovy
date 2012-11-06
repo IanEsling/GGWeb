@@ -62,7 +62,7 @@ public class RacingPostRaceService {
                         it.venue == race.venue &&
                                 it.time == race.time
                     }
-                    if (raceDayRace.horses?.isEmpty() && !race.horses?.isEmpty()) {
+                    if (raceDayRace.horses?.isEmpty() && race.horsess != null && !race.horses?.isEmpty()) {
                         log.info("adding horses from $race to existing race.")
                         raceDayRace.horses = race.horses
                         sendMail = true
