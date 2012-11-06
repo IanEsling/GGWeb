@@ -33,8 +33,14 @@ class RaceDayController {
     }
 
     def email(Long id){
-        RaceDay raceDay = RaceDay.get(id)
-        render(view: "/email/raceDay", model: [raceDay: new EmailPresentableRaceDay(raceDay)])
+//        RaceDay raceDay = RaceDay.get(id)
+//        render(view: "/email/raceDay", model: [raceDay: new EmailPresentableRaceDay(raceDay)])
+        sendMail {
+            to "ian.esling@gmail.com"
+            from "GeeGees@GeeGees.com"
+            subject "Email From GeeGees!"
+            body (view: "/email/raceDay", model:[raceDay: new EmailPresentableRaceDay(raceDay)])
+        }
     }
 
 
