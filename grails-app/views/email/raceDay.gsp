@@ -14,7 +14,7 @@
     <g:each in="${raceDay.bettableRaces}" var="race">
         <table style="width: 80%;text-align: center;border-top: solid 2px black;margin: auto;">
             <tr>
-                <td style="text-align: right;width: 30%">
+                <td style="text-align: right;width: 50%">
                     <div>
                         <p style="font-size: 24pt;">${race.time}</p>
 
@@ -23,7 +23,7 @@
                         <p style="font-size: 11pt;">Number of runners: ${race.numberOfRunners}</p>
                     </div>
                 </td>
-                <td style="text-align: center;width: 70%;">
+                <td style="text-align: center;width: 50%;">
                     <div>
                         <g:each in="${race.horses}" var="horse">
                             <p>${horse.name} - ${horse.odds}</p>

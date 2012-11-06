@@ -1,8 +1,7 @@
 package geegees.model
 
-import org.springframework.dao.DataIntegrityViolationException
-import org.joda.time.LocalDate
 import geegees.web.EmailPresentableRaceDay
+import org.springframework.dao.DataIntegrityViolationException
 
 class RaceDayController {
 
@@ -32,15 +31,16 @@ class RaceDayController {
         redirect(action: "show", id: raceDayInstance.id)
     }
 
-    def email(Long id){
+    def email(Long id) {
         RaceDay raceDay = RaceDay.get(id)
 //        render(view: "/email/raceDay", model: [raceDay: new EmailPresentableRaceDay(raceDay)])
         sendMail {
             to "ian.esling@gmail.com"
             from "GeeGees@GeeGees.com"
             subject "Email From GeeGees!"
-            body (view: "/email/raceDay", model:[raceDay: new EmailPresentableRaceDay(raceDay)])
+            body(view: "/email/raceDay", model: [raceDay: new EmailPresentableRaceDay(raceDay)])
         }
+        redirect(action: "show", id: id)
     }
 
 
