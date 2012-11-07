@@ -6,9 +6,9 @@
 
 <body style="font-family: Helvetica, Arial, sans-serif; background-color: #90ee90">
 
-<h1 style="font-size: 24pt;text-align: center;width: 80%;margin: auto;">Les of Profit</h1>
+<h1 style="font-size: 24pt; padding-top: 10px; text-align: center;width: 80%;margin: auto;">Les of Profit</h1>
 
-<h2 style="font-size: 20pt;text-align: center;width: 80%;margin: auto;">Bettable races for ${raceDay.raceDate}:</h2>
+<h2 style="font-size: 20pt;text-align: center;width: 80%;margin: auto;">Bettable races for <g:formatDate format="dd MMM yyyy" date="${raceDay.raceDate}"/>:</h2>
 
 <g:if test="${raceDay?.bettableRaces}">
     <g:each in="${raceDay.bettableRaces}" var="race">

@@ -25,11 +25,11 @@ class EmailPresentableRace implements Comparable<EmailPresentableRace> {
         println "lowest magic number $lowestMagicNumber"
     }
 
-
-
-    public Set<Horse> getHorses() {
+    public Set<EmailPresentableHorse> getHorses() {
         race.horses.findAll {
             it.decimalOdds == favouriteOdds
+        }.collect {
+            new EmailPresentableHorse(it)
         }
     }
 
@@ -49,5 +49,4 @@ class EmailPresentableRace implements Comparable<EmailPresentableRace> {
     int compareTo(EmailPresentableRace race) {
         return this.lowestMagicNumber.compareTo(race.lowestMagicNumber)
     }
-
 }
