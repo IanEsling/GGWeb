@@ -8,6 +8,7 @@ public class HorseBuilder {
     private String odds;
     private Integer tips = 0;
     private double decimalOdds;
+    private double magicNumber;
 
     private HorseBuilder() {}
 
@@ -19,6 +20,7 @@ public class HorseBuilder {
         Horse horse = new Horse(name, odds);
         horse.setTips(tips);
         horse.setDecimalOdds(decimalOdds);
+        horse.setMagicNumber(magicNumber);
         return horse;
     }
 
@@ -39,6 +41,11 @@ public class HorseBuilder {
 
     public HorseBuilder tips(Integer tips) {
         this.tips = tips;
+        return this;
+    }
+
+    public HorseBuilder magicNumber(double magicNumber) {
+        this.magicNumber = magicNumber;
         return this;
     }
 }

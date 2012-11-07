@@ -1,6 +1,7 @@
 package geegees.web
 
 import geegees.model.Horse
+import java.math.RoundingMode
 
 
 class EmailPresentableHorse {
@@ -20,6 +21,6 @@ class EmailPresentableHorse {
     }
 
     BigDecimal getMagicNumber() {
-        return new BigDecimal(horse.magicNumber).setScale(3)
+        return new BigDecimal(horse.magicNumber).setScale(3, RoundingMode.HALF_UP)
     }
 }
