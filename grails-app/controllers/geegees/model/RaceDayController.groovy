@@ -1,6 +1,7 @@
 package geegees.model
 
 import geegees.web.EmailPresentableRaceDay
+import grails.util.Environment
 import org.springframework.dao.DataIntegrityViolationException
 
 class RaceDayController {
@@ -33,14 +34,17 @@ class RaceDayController {
 
     def email(Long id) {
         RaceDay raceDay = RaceDay.get(id)
-//        render(view: "/email/raceDay", model: [raceDay: new EmailPresentableRaceDay(raceDay)])
-        sendMail {
-            to "ian.esling@gmail.com"
-            from "GeeGees@GeeGees.com"
-            subject "Email From GeeGees!"
-            body(view: "/email/raceDay", model: [raceDay: new EmailPresentableRaceDay(raceDay)])
+        if (Environment.currentEnvironment == Environment.PRODUCTION) {
+            sendMail {
+                to "ian.esling@gmail.com"
+                from "GeeGees@GeeGees.com"
+                subject "Email From GeeGees!"
+                body(view: "/email/raceDay", model: [raceDay: new EmailPresentableRaceDay(raceDay)])
+            }
+            redirect(action: "show", id: id)
+        } else {
+            render(view: "/email/raceDay", model: [raceDay: new EmailPresentableRaceDay(raceDay)])
         }
-        redirect(action: "show", id: id)
     }
 
 

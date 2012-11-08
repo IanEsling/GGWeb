@@ -5,7 +5,7 @@
 </head>
 
 <body style="font-family: Helvetica, Arial, sans-serif; background-color: #90ee90">
-
+<div style="text-align: center"> <img src="http://geegees.heroku.com/geegees/images/dad.jpg"/> </div>
 <h1 style="font-size: 24pt; padding-top: 10px; text-align: center;width: 80%;margin: auto;">Les of Profit</h1>
 
 <h2 style="font-size: 20pt;text-align: center;width: 80%;margin: auto;">Bettable races for <joda:format style="L-" value="${raceDay.raceDate}"/>:</h2>
