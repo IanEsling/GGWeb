@@ -73,7 +73,7 @@ public class RacingPostRaceService {
         raceDay.save(flush: true)
         if (sendMail) {
             mailService.sendMail {
-                to "ian.esling@gmail.com", "aliciales@esling.me.uk"
+                to "ian.esling@gmail.com", "aliciales@esling.me.uk", "pesling@gmail.com"
                 from "GeeGees@GeeGees.com"
                 subject "Email From GeeGees!"
                 body (view: "/email/raceDay", model:[raceDay: new EmailPresentableRaceDay(raceDay)])
